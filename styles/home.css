@@ -1,0 +1,48 @@
+body {
+    background-color: #f8f9fa;
+
+}
+
+.btn,
+.form-control {
+    margin-bottom: 15px;
+}
+
+.text {
+    font-weight: 700;
+    text-align: center;
+}
+
+.button {
+    background-color: #f5f3f4;
+    border-radius: 5px;
+    font-weight: 700;
+    text-align: center;
+    border: 0.1px solid black;
+    display: inline-block;
+    margin: 7px;
+    padding: 10px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.button:hover {
+    background-color: #caf0f8;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.button:active {
+    background-color: #00b4d8;
+    box-shadow: 0 10px #666;
+    transform: translateY(8px);
+}
+
+.displayId {
+    text-align: left;
+}
+
+h4 {
+    text-align: center;
+}
