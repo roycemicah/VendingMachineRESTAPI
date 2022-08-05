@@ -28,14 +28,52 @@ body {
 }
 
 .button:hover {
-    background-color: #caf0f8;
-    box-shadow: 0 5px #666;
+    /* background-color: #caf0f8; */
+    background-color: #ff99ac;
+    box-shadow: 0 5px #6a6b70;
     transform: translateY(4px);
 }
 
 .button:active {
-    background-color: #00b4d8;
+    /* background-color: #00b4d8; */
+    background-color: #ff5c8a;
     box-shadow: 0 10px #666;
+    transform: translateY(8px);
+}
+
+.coin:hover {
+    background-color: #ffd60a;
+    box-shadow: 0 3px #6a6b70;
+    transform: translateY(4px);
+}
+
+.coin:active {
+    background-color: #ffc300;
+    box-shadow: 0 4px #666;
+    transform: translateY(8px);
+}
+
+#makePurchase:hover {
+    background-color: #25a244;
+    box-shadow: 0 3px #6a6b70;
+    transform: translateY(4px);
+}
+
+#makePurchase:active {
+    background-color: #208b3a;
+    box-shadow: 0 4px #666;
+    transform: translateY(8px);
+}
+
+#returnChange:hover {
+    background-color: #da1e37;
+    box-shadow: 0 3px #6a6b70;
+    transform: translateY(4px);
+}
+
+#returnChange:active {
+    background-color: #c71f37;
+    box-shadow: 0 4px #666;
     transform: translateY(8px);
 }
 

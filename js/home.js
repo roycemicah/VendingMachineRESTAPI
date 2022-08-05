@@ -28,11 +28,11 @@ function loadInventory() {
                 let quantity = item.quantity;
 
                 let dynamicContent = '<button class="btn btn-outline col-md-3 button" onclick="selectItem(' + id + ')">'
-                    dynamicContent += '<p class="displayId">' + id + '</p>'
-                    dynamicContent += '<p>' + name + '</p>'
-                    dynamicContent += '<p>$' + price + '</p>'
-                    dynamicContent += '<p>' + 'Quantity Left:' + ' ' + quantity + '</p>'
-                    dynamicContent += '</button>';
+                dynamicContent += '<p class="displayId">' + id + '</p>'
+                dynamicContent += '<p>' + name + '</p>'
+                dynamicContent += '<p>$' + price + '</p>'
+                dynamicContent += '<p>' + 'Quantity Left:' + ' ' + quantity + '</p>'
+                dynamicContent += '</button>';
 
                 // item card created
                 itemRows.append(dynamicContent);
@@ -41,14 +41,14 @@ function loadInventory() {
         error: function () {
             $('#errorMessages')
                 .append($('<li>')
-                .attr({class: 'list-group-item list-group-item-danger'})
-                .text('Error calling web service. Please try again later.'));
+                    .attr({ class: 'list-group-item list-group-item-danger' })
+                    .text('Error calling web service. Please try again later.'));
         }
     })
 }
 
 function makePurchase() {
-    $('#makePurchase').click(function(event) {
+    $('#makePurchase').click(function (event) {
         displayMessage.val('');
 
         if (itemName.val() == '') {
@@ -71,7 +71,7 @@ function makePurchase() {
                 },
                 'dataType': 'json',
                 success: function (change) {
-                    changeMessage(change.quarters, change.dimes, change.nickels, change.pennies)
+                    changeMessage(change)
                     displayMessage.val('Thank You!!!');
                     loadInventory();
                 },
@@ -93,25 +93,25 @@ function selectItem(id) {
 }
 
 function insertMoney() {
-    $('#insertDollar').click(function(event) {
+    $('#insertDollar').click(function (event) {
         balance = + moneyDisplay.val();
         balance = balance + 1.00;
         moneyDisplay.val(balance.toFixed(2));
         displayChangeOutput.val('');
     });
-    $('#insertQuarter').click(function(event) {
+    $('#insertQuarter').click(function (event) {
         balance = + moneyDisplay.val();
         balance = balance + 0.25;
         moneyDisplay.val(balance.toFixed(2));
         displayChangeOutput.val('');
     });
-    $('#insertDime').click(function(event) {
+    $('#insertDime').click(function (event) {
         balance = + moneyDisplay.val();
         balance = balance + 0.10;
         moneyDisplay.val(balance.toFixed(2));
         displayChangeOutput.val('');
     });
-    $('#insertNickel').click(function(event) {
+    $('#insertNickel').click(function (event) {
         balance = + moneyDisplay.val();
         balance = balance + 0.05;
         moneyDisplay.val(balance.toFixed(2));
@@ -120,7 +120,7 @@ function insertMoney() {
 }
 
 function getChange() {
-    returnChange.click(function(event) {
+    returnChange.click(function (event) {
 
         if (moneyDisplay.val() == '') {
             displayChangeOutput.val('No Change Inserted');
@@ -138,46 +138,28 @@ function getChange() {
         balance = balance - (numDimes * 10);
         var numNickels = Math.floor(balance / 5);
         var numPennies = Math.floor(balance - (numNickels * 5));
-        
-        changeMessage(numQuarters, numDimes, numNickels, numPennies);
+
+        changeMessage({ "quarters": numQuarters, "dimes": numDimes, "nickels": numNickels, "pennies": numPennies });
         displayMessage.val('');
 
     });
 }
 
-function changeMessage(numQuarters, numDimes, numNickels, numPennies) {
-    let returnedCoins = '';
+function changeMessage(change) {
+    let message = "";
+    
+    for (denomination in change) {
+        if (change[denomination] > 0) {
+            let count = change[denomination];
 
-    if (numQuarters > 0) {
-        if (numQuarters == 1) {
-            returnedCoins += numQuarters + ' Quarter ';
-        } else {
-            returnedCoins += numQuarters + ' Quarters ';
+            if (denomination == "pennies") {
+                count > 1 ? message += count + " " + denomination : message += count + " " + " penny";
+            } else {
+                count > 1 ? message += count + " " + denomination + " " : message += count + " " + denomination.slice(0, -1) + " ";
+            }
         }
     }
-    if (numDimes > 0) {
-        if (numDimes == 1) {
-            returnedCoins += numDimes + ' Dime ';
-        } else {
-            returnedCoins += numDimes + ' Dimes ';
-        }
-    }
-    if (numNickels > 0) {
-        if (numNickels == 1) {
-            returnedCoins += numNickels + ' Nickel ';
-        } else {
-            returnedCoins += numNickels + ' Nickels ';
-        }
-    }
-    if (numPennies > 0) {
-        if (numPennies == 1) {
-            returnedCoins += numPennies + ' Penny ';
-        } else {
-            returnedCoins += numPennies + ' Pennies ';
-        }
-    }
-
-    displayChangeOutput.val(returnedCoins);
+    displayChangeOutput.val(message);
     moneyDisplay.val('0.00');
     itemName.val('');
 }
